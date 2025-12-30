@@ -1,0 +1,43 @@
+:root {
+  /* Base */
+  --color-bg: #0b0d10;
+  --color-surface: #12151b;
+  --color-surface-2: #161b23;
+  --color-border: #1e2330;
+
+  /* Text */
+  --color-text-primary: #edeff4;
+  --color-text-muted: #8b93a7;
+
+  /* Brand */
+  --color-accent-primary: #5c7cfa;
+  --color-accent-primary-soft: #8fa7ff;
+  --color-accent-secondary: #7a5cfa;
+
+  /* System */
+  --color-success: #3ddc97;
+  --color-danger: #ff6b6b;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Typography */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-1: 120ms;
+  --dur-2: 180ms;
+  --dur-3: 260ms;
+}

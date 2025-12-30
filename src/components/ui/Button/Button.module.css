@@ -1,0 +1,21 @@
+.btn{
+  height:46px;
+  padding:0 16px;
+  border-radius:var(--radius-md);
+  border:1px solid transparent;
+  font-weight:600;
+  letter-spacing:-0.01em;
+  transition: transform var(--dur-1) var(--ease-standard), opacity var(--dur-1) var(--ease-standard);
+}
+.btn:active{transform:scale(0.99);}
+.full{width:100%;}
+.primary{
+  background: linear-gradient(135deg, rgba(92,124,250,1), rgba(122,92,250,1));
+  color:white;
+}
+.ghost{
+  background: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+.btn:disabled{opacity:0.55;}

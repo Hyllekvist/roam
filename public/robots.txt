@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /discover
+Disallow: /matches
+Disallow: /chat
+Disallow: /after
+Disallow: /settings
+Sitemap: /api/seo/sitemap

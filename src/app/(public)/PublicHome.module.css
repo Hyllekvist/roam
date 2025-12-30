@@ -1,0 +1,140 @@
+.page {
+  min-height: 100vh;
+  padding: 24px 16px 80px;
+  background: radial-gradient(800px 500px at 20% 10%, rgba(92,124,250,0.25), transparent 55%),
+    radial-gradient(700px 400px at 80% 20%, rgba(122,92,250,0.18), transparent 60%),
+    var(--color-bg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 18px;
+}
+
+.nav {
+  display: flex;
+  gap: 14px;
+}
+
+.nav a {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.hero {
+  max-width: 980px;
+  margin: 36px auto 0;
+  display: grid;
+  gap: 18px;
+}
+
+.h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.sub {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 15px;
+  line-height: 1.4;
+  max-width: 52ch;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.primary {
+  height: 46px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(92,124,250,1), rgba(122,92,250,1));
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.ghost {
+  height: 46px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: rgba(255,255,255,0.02);
+}
+
+.cards {
+  margin-top: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.02);
+}
+
+.cardTitle {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.cardText {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.footer {
+  max-width: 980px;
+  margin: 28px auto 0;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+@media (min-width: 860px) {
+  .hero { grid-template-columns: 1.2fr 0.8fr; align-items: start; }
+  .cards { margin-top: 0; }
+  .h1 { font-size: 44px; }
+}
+
+.login{color:var(--color-text-muted);font-size:13px;}
+.secondary{
+  height:46px;
+  padding:0 16px;
+  border-radius:var(--radius-md);
+  border:1px solid var(--color-border);
+  background: rgba(255,255,255,0.02);
+  color: var(--color-text-primary);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+}
+.h2{margin:0 0 6px;font-weight:600;font-size:14px;}
+.p{margin:0;color:var(--color-text-muted);font-size:13px;line-height:1.35;}
