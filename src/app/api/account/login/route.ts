@@ -1,6 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-import { env } from "@/lib/config/env";
 import { loginSchema } from "@/lib/security/validators";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
@@ -18,6 +17,13 @@ export async function POST(req: NextRequest) {
   }
 
   const { identifier, password } = parsed.data;
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return NextResponse.json({ ok: false, error: "ENV_MISCONFIGURED" }, { status: 500 });
+  }
 
   // identifier kan være email eller username
   let email = identifier;
@@ -43,23 +49,19 @@ export async function POST(req: NextRequest) {
 
   const res = NextResponse.json({ ok: true });
 
-  const supabase = createServerClient(
-    env.NEXT_PUBLIC_SUPABASE_URL,
-    env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    {
-      cookies: {
-        get(name: string) {
-          return req.cookies.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          res.cookies.set({ name, value, ...(options ?? {}) });
-        },
-        remove(name: string, options: CookieOptions) {
-          res.cookies.set({ name, value: "", ...(options ?? {}), maxAge: 0 });
-        },
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      get(name: string) {
+        return req.cookies.get(name)?.value;
       },
-    }
-  );
+      set(name: string, value: string, options: CookieOptions) {
+        res.cookies.set({ name, value, ...(options ?? {}) });
+      },
+      remove(name: string, options: CookieOptions) {
+        res.cookies.set({ name, value: "", ...(options ?? {}), maxAge: 0 });
+      },
+    },
+  });
 
   const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
 
