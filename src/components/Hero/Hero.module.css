@@ -1,0 +1,86 @@
+.hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(90,110,255,0.18), transparent 60%),
+    radial-gradient(800px 500px at 80% 30%, rgba(140,80,255,0.15), transparent 60%),
+    #06070b;
+  color: #fff;
+}
+
+.inner {
+  max-width: 720px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.kicker {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  opacity: 0.6;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: clamp(42px, 7vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px;
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 1.5;
+  opacity: 0.75;
+  margin-bottom: 48px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 64px;
+}
+
+.primary {
+  padding: 14px 28px;
+  border-radius: 14px;
+  background: #6a6cff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(106,108,255,0.4);
+}
+
+.secondary {
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+.signal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
