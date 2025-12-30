@@ -28,8 +28,11 @@ export default function LoginClient() {
       });
       const data = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(data?.error ?? "Login failed");
-      const next = sp.get("next") ?? "/discover";
-      router.replace(next);
+      const raw = sp.get("next");
+const next =
+  raw && raw.startsWith("/") && !raw.startsWith("//") ? raw : "/discover";
+router.replace(next);
+
     } catch (err: any) {
       setError(err?.message ?? "Login failed");
     } finally {
@@ -38,7 +41,8 @@ export default function LoginClient() {
   }
 
   return (
-    <AuthCard title="Log in" subtitle="Email or username. Password. Done.">
+    <AuthCard title="Log in" subtitle="No feeds. No noise. Just access.">
+
       <form onSubmit={onSubmit} className={styles.form}>
         <Input
           label="Email or username"
