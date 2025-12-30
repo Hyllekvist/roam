@@ -1,6 +1,9 @@
 import Link from "next/link";
 import styles from "./PublicHome.module.css";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default function PublicHome() {
   return (
     <main className={styles.page}>
