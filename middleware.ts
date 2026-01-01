@@ -1,55 +1,50 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const PROTECTED_PREFIXES = ["/discover", "/matches", "/chat", "/after", "/settings"];
-
-function isProtectedPath(pathname: string) {
-  return PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
+function isSafeNext(path: string) {
+  return path.startsWith("/") && !path.startsWith("//");
 }
-
-type CookieOptions = Record<string, any>;
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  // Basic security headers (keep CSP light in MVP; tighten later)
-  res.headers.set("Referrer-Policy", "no-referrer");
-  res.headers.set("X-Content-Type-Options", "nosniff");
-  res.headers.set("X-Frame-Options", "DENY");
-  res.headers.set("Permissions-Policy", "geolocation=(self)");
-
-  const { pathname } = req.nextUrl;
-  if (!isProtectedPath(pathname)) return res;
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    const u = req.nextUrl.clone();
-    u.pathname = "/login";
-    return NextResponse.redirect(u);
-  }
-
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-    cookies: {
-      get(name: string) {
-        return req.cookies.get(name)?.value;
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return req.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            res.cookies.set(name, value, options);
+          });
+        },
       },
-      set(name: string, value: string, options: CookieOptions) {
-        res.cookies.set({ name, value, ...(options ?? {}) });
-      },
-      remove(name: string, options: CookieOptions) {
-        res.cookies.set({ name, value: "", ...(options ?? {}), maxAge: 0 });
-      },
-    },
-  });
+    }
+  );
 
   const { data } = await supabase.auth.getUser();
+  const user = data?.user;
 
-  if (!data?.user) {
+  const pathname = req.nextUrl.pathname;
+  const search = req.nextUrl.search;
+
+  // Hvis ikke logged in og prøver at gå på private routes → send til login med next=
+  if (!user) {
+    const next = `${pathname}${search}`;
+    const loginUrl = req.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.searchParams.set("next", isSafeNext(next) ? next : "/discover");
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Hvis logged in og går på /login eller /signup → send til /discover
+  if (pathname === "/login" || pathname === "/signup") {
     const u = req.nextUrl.clone();
-    u.pathname = "/login";
-    u.searchParams.set("next", pathname);
+    u.pathname = "/discover";
+    u.search = "";
     return NextResponse.redirect(u);
   }
 
@@ -57,5 +52,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|icons|og).*)"],
+  matcher: ["/discover/:path*", "/match/:path*", "/account/:path*", "/login", "/signup"],
 };
